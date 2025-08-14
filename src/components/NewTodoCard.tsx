@@ -3,7 +3,7 @@ import {useState} from "react";
 import axios from "axios";
 
 type Props = {
-    whenTodoItemSaved: () => void
+    onTodoItemChange: () => void
 }
 
 export default function NewTodoCard(props: Props) {
@@ -21,13 +21,13 @@ export default function NewTodoCard(props: Props) {
                 description: text,
                 status: "OPEN",
             } as Todo)
-            .then(props.whenTodoItemSaved)
+            .then(props.onTodoItemChange)
     }
 
     return (
         <div className="todo-card new-todo">
             <input type="text" value={text} onInput={changeText}/>
-            <button className="input-save" onClick={saveTodo}>Save</button>
+            <button onClick={saveTodo}>Save</button>
         </div>
     );
 }
