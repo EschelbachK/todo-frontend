@@ -1,21 +1,25 @@
 import './App.css'
 import type {Todo} from "./Todo.ts";
 import TodoCard from "./components/TodoCard.tsx";
-
+import {useEffect, useState} from "react";
+import axios from "axios";
 function App() {
 
-    const todos: Todo[] = [
-        {
-            "id": "abc1234",
-            "description": "kochen",
-            "status": "OPEN"
-        },
-        {
-            "id": "abc14",
-            "description": "putzen",
-            "status": "IN_PROGRESS"
-        }
-    ]
+    const [todos, setTodos] = useState<Todo[]>()
+
+    useEffect(
+        () => {
+            axios.get("/api/todo")
+                .then(response => {
+                    setTodos(response.data)
+                })
+        }, []
+    )
+
+    if (!todos) {
+        return "Lade..."
+    }
+
 
   return (
     <>
