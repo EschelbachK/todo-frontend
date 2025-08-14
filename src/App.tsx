@@ -15,17 +15,17 @@ function App() {
                 setTodos(response.data)
             })
     }
-        useEffect(fetchTodos, [])
+
+    useEffect(fetchTodos, [])
 
     if (!todos) {
         return "Lade..."
     }
 
-
     return (
         <>
             <div className="page">
-                <h1>TODOs</h1>
+                <h1>TODOS</h1>
                 {
                     allPossibleTodos.map(status => {
                         const filteredTodos = todos.filter(todo => todo.status === status)
@@ -38,6 +38,11 @@ function App() {
                     })
                 }
             </div>
+
+            {/* Footer */}
+            <footer className="footer">
+                <p>© 2025 Mein ToDo-Board – Kai Eschelbach </p>
+            </footer>
         </>
     )
 }

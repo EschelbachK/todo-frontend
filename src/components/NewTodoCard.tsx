@@ -27,7 +27,7 @@ export default function NewTodoCard(props: Props) {
     return (
         <div className="todo-card new-todo">
             <input type="text" value={text} onInput={changeText}/>
-            <button onClick={saveTodo}>Save</button>
+            <button className="gradient-button" onClick={saveTodo}>Save</button>
         </div>
     );
 }

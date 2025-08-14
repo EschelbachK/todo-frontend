@@ -1,42 +1,246 @@
 body {
     font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    margin: 0;
+    padding: 20px;
 }
 
 .page {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
-    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 50px; /* etwas mehr Abstand zwischen Karten */
+    max-width: 1300px;
+    margin: auto;
+    padding-bottom: 40px; /* extra Abstand nach unten */
 }
 
 h1 {
     grid-column: 1 / -1;
     text-align: center;
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 30px;
+    position: relative;
+    background: linear-gradient(90deg, #42a5f5, #66bb6a, #ffca28);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 5s ease infinite;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.2);
 }
+
+@keyframes gradientShift {
+    0% { background-position: 50%; }
+    50% { background-position: 100% 50%; }
+
+}
+
+
+
+@keyframes shine {
+    0% { left: -75%; }
+    100% { left: 125%; }
+}
+
+
+h2 {
+    font-size: 1.8rem;
+    text-align: center;
+    font-weight: 700;
+    position: relative;
+    background: linear-gradient(90deg, #42a5f5, #66bb6a, #ffca28);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 5s ease infinite;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    margin: 20px 0;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+h2::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -30%;          /* Start etwas näher am Text */
+    width: 20%;           /* Schmaler Glanzstreifen */
+    height: 100%;
+    background: linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,0.25), /* sanftere Deckkraft */
+            transparent
+    );
+    transform: skewX(-25deg);   /* leichtere Schrägstellung für Eleganz */
+    animation: shine 4s ease-in-out infinite; /* langsamer und smoother */
+}
+
+@keyframes shine {
+    0% { left: -30%; }
+    100% { left: 130%; } /* Glanz fährt komplett über Text */
+}
+
 
 .todo-card {
     display: grid;
-    border: solid 2px black;
-    border-radius: 10px;
-    height: 50px;
-    margin-bottom: 20px;
-    padding: 15px;
-    gap: 5px;
-    grid-template-columns: repeat(3, 1fr);
+    margin: 10px 0;
+    grid-template-columns: 80px 1fr 80px;
+    gap: 10px;
+    align-items: center;
+    padding: 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    border: 1px solid rgba(255,255,255,0.5);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.todo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+}
+
+/* Status bar on top */
+.todo-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 6px;
+    width: 100%;
+}
+
+.todo-card.status-OPEN::before {
+    background: #42a5f5;
+}
+
+.todo-card.status-IN_PROGRESS::before {
+    background: #ffca28;
+}
+
+.todo-card.status-DONE::before {
+    background: #66bb6a;
 }
 
 .todo-card input {
-    width: 100%;
     grid-column: 1 / -1;
-    border-width: 0 0 1px 0;
-    padding: 0;
+    font-size: 1rem;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.5);
+    box-shadow:
+            inset 0 2px 5px rgba(0,0,0,0.05),
+            inset 0 0 8px rgba(66,200,245,0.5); /* sanftes Blau innen */
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
 
+.todo-card input:focus {
+    background: rgba(255,255,255,0.8);
+    outline: none;
+    box-shadow:
+            inset 0 2px 5px rgba(0,0,0,0.05),
+            inset 0 0 12px rgba(66,165,245,0.6), /* stärkerer Glow bei Fokus */
+            0 0 6px rgba(66,165,245,0.4); /* leichtes äußeres Leuchten */
+}
+
+/* Buttons */
+.todo-card button {
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow:
+        inset 0 2px 5px rgba(0,0,0,0.05),
+        inset 0 0 8px rgba(66,150,245,0.3); /* sanftes Blau innen */
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.todo-card button:hover {
+    transform: scale(1.05);
+}
+
+/* Specific button colors */
+.todo-card button.delete {
+    background: #ef5350;
+}
+
+.todo-card button.delete:hover {
+    background: #d32f2f;
+}
+
+.todo-card button.move-left {
+    background: #ffca28;
+    color: #333;
+}
+
+.todo-card button.move-left:hover {
+    background: #f4b400;
+}
+
+.todo-card button.move-right {
+    background: #66bb6a;
+}
+
+.todo-card button.move-right:hover {
+    background: #43a047;
 }
 
 .todo-card.new-todo {
-    grid-template-columns: inherit;
+    grid-template-columns: 1fr auto;
+}
+/* --- Animated Gradient Button (wie h2) --- */
+.gradient-button {
+    font-weight: 700;
+    background: linear-gradient(90deg, #42a5f5, #66bb6a, #ffca28);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    font-size: 1.1rem;
+    animation: gradientShift 5s ease infinite;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: transform 0.15s ease;
 }
 
-.todo-card button {
-    justify-self: center;
-    min-width: 50px;
+.gradient-button:hover {
+    transform: scale(1.05);
+}
+
+.gradient-button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent);
+    transform: skewX(-20deg);
+    animation: shine 3s infinite;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    font-size: 0.9rem;
+    color: #555;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
