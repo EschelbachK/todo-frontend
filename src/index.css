@@ -16,10 +16,20 @@ h1 {
 
 
 .todo-card {
-    border: solid 1px black;
+    border: solid 2px black;
     border-radius: 5px;
     height: 50px;
-    width: 100px;
     margin-bottom: 20px;
     padding: 15px;
+}
+
+.todo-card.new-todo {
+    display: grid;
+    gap: 5px;
+}
+
+.input-save {
+    padding: 5px;
+    justify-self:right ;
+
 }

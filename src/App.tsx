@@ -9,33 +9,32 @@ function App() {
 
     const [todos, setTodos] = useState<Todo[]>()
 
-    useEffect(
-        () => {
-            axios.get("/api/todo")
-                .then(response => {
-                    setTodos(response.data)
-                })
-        }, []
-    )
+    function fetchTodos() {
+        axios.get("/api/todo")
+            .then(response => {
+                setTodos(response.data)
+            })
+    }
+        useEffect(fetchTodos, [])
 
     if (!todos) {
         return "Lade..."
     }
 
 
-  return (
-    <>
-        <div className="page">
-            <h1>TODOs</h1>
-            {
-            allPossibleTodos.map(status => {
-                const filteredTodos = todos.filter(todo => todo.status === status)
-                return <TodoColumn status={status} todos={filteredTodos}/>
-            })
-        }
-        </div>
-    </>
-  )
+    return (
+        <>
+            <div className="page">
+                <h1>TODOs</h1>
+                {
+                    allPossibleTodos.map(status => {
+                        const filteredTodos = todos.filter(todo => todo.status === status)
+                        return <TodoColumn status={status} todos={filteredTodos} whenTodoItemSaved={fetchTodos}/>
+                    })
+                }
+            </div>
+        </>
+    )
 }
 
 export default App
